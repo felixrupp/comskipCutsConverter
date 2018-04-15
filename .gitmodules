@@ -1,0 +1,3 @@
+[submodule "vendor/erikkaashoek/Comskip"]
+	path = vendor/erikkaashoek/Comskip
+	url = https://github.com/erikkaashoek/Comskip.git
