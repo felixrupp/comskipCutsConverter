@@ -20,12 +20,11 @@ if (($argc < 2 || $argc > 3) || in_array($argv[1], array('--help', '-help', '-h'
 
 Create comskip .plist-file and convert it to Enigma2 .cuts file.
 
-Usage:
-<?php echo $argv[0]; ?> <mpeg2_ts_file> (<mode>)
+Usage: <?php echo $argv[0]; ?> <mpeg2_ts_file> (<mode>)
 
-<mpeg2_ts_file> must be the relative (not absolute)
-    name to a .ts file
-    Access this help with --help, -help, -h oder -?
+Access this help with --help, -help, -h oder -?
+
+<mpeg2_ts_file> must be the path to a .ts file
 
 (<mode>) (optional) define the mode of operation.
     'both':     default, which executes comskip
@@ -33,7 +32,6 @@ Usage:
     'comskip':  only execute comskip.
     'convert':  only convert the comskip output to .cuts
                 (you need to run comskip beforehand).
-
 
 <?php
 } else {
