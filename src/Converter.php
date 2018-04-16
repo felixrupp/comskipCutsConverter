@@ -33,7 +33,7 @@ class Converter
             rename($comskipBasePath . "/" . $comskipFolder . ".ts.cuts", $comskipBasePath . "/" . $comskipFolder . ".ts.old.cuts");
         }
 
-        $cutsDataOld = self::readCuts($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.old.cuts");
+        $cutsDataOld = self::readCuts($comskipBasePath . "/" . $fileName . ".ts.old.cuts");
 
         $plistData = self::readComskipPlist($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".plist");
 
