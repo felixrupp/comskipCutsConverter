@@ -35,6 +35,13 @@ class Converter
 
         $result = self::writeCuts($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.new.cuts", $plistData);
 
+        if (is_file(realpath($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.new.cuts"))) {
+
+            echo "Copy new Enigma2 cuts-file …\n\n";
+            copy($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.new.cuts", $comskipBasePath . "/" . $comskipFolder . ".ts.cuts");
+            unlink($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.new.cuts");
+        }
+
         return $result . "\n";
     }
 

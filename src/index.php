@@ -2,11 +2,11 @@
 
 namespace FelixRupp\ComskipCutsConverter;
 
-require_once "Converter.php";
-require_once "Comskip.php";
+#require_once "Converter.php";
+#require_once "Comskip.php";
 
-#require_once "phar://comskipCutsConverter.phar/Converter.php";
-#require_once "phar://comskipCutsConverter.phar/Comskip.php";
+require_once "phar://comskipCutsConverter.phar/Converter.php";
+require_once "phar://comskipCutsConverter.phar/Comskip.php";
 
 /**
  * Main File
@@ -44,9 +44,10 @@ Usage:
 
         $comskipFolderAbsolute = substr($comskipFolder, 0, strrpos($comskipFolder, ".ts"));
 
-        $comskipFolder = substr($comskipFolderAbsolute, strrpos($comskipFolderAbsolute, "/")+1, strlen($comskipFolderAbsolute));
+        $comskipFolder = substr($comskipFolderAbsolute, strrpos($comskipFolderAbsolute, "/"), strlen($comskipFolderAbsolute));
 
         $comskipBasePath = dirname($comskipFolderAbsolute);
+
     } else {
 
         die(1);
@@ -63,17 +64,17 @@ Usage:
 
     if ($option === "comskip") {
 
-        echo Comskip::run($comskipFolder, $comskipBasePath);
+        Comskip::run($comskipFolder, $comskipBasePath);
     }
 
     if ($option === "convert") {
 
-        echo Converter::run($comskipFolder, $comskipBasePath);
+        Converter::run($comskipFolder, $comskipBasePath);
     }
 
     if ($option === "both") {
 
-        echo Comskip::run($comskipFolder, $comskipBasePath);
-        echo Converter::run($comskipFolder, $comskipBasePath);
+        Comskip::run($comskipFolder, $comskipBasePath);
+        Converter::run($comskipFolder, $comskipBasePath);
     }
 }
