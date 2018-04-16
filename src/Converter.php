@@ -13,8 +13,9 @@ class Converter
 {
 
     /**
-     * @param $comskipFolder
-     * @return bool
+     * @param string $comskipFolder
+     * @param string $comskipBasePath
+     * @return string
      */
     public static function run($comskipFolder, $comskipBasePath)
     {
@@ -26,7 +27,13 @@ class Converter
 
         $fileName = $comskipFolder;
 
-        $cutsDataOld = self::readCuts($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.cuts");
+        if (is_file(realpath($comskipBasePath . "/" . $comskipFolder . ".ts.cuts")) && !is_file(realpath($comskipBasePath . "/" . $comskipFolder . ".ts.old.cuts"))) {
+
+            echo "Rename old Enigma2 cuts-file …\n\n";
+            rename($comskipBasePath . "/" . $comskipFolder . ".ts.cuts", $comskipBasePath . "/" . $comskipFolder . ".ts.old.cuts");
+        }
+
+        $cutsDataOld = self::readCuts($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.old.cuts");
 
         $plistData = self::readComskipPlist($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".plist");
 
