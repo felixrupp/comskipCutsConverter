@@ -39,7 +39,26 @@ class Converter
 
             echo "Copy new Enigma2 cuts-file …\n\n";
             copy($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.new.cuts", $comskipBasePath . "/" . $comskipFolder . ".ts.cuts");
-            unlink($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.new.cuts");
+        }
+
+        # Garbage Collection
+        if (is_dir(realpath($comskipBasePath . "/" . $comskipFolder))) {
+
+            $it = new \RecursiveDirectoryIterator($comskipBasePath . "/" . $comskipFolder, \RecursiveDirectoryIterator::SKIP_DOTS);
+            $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
+
+            foreach ($files as $file) {
+
+                if ($file->isDir()) {
+
+                    rmdir($file->getRealPath());
+                } else {
+
+                    unlink($file->getRealPath());
+                }
+            }
+
+            rmdir($comskipBasePath . "/" . $comskipFolder);
         }
 
         return $result . "\n";
@@ -52,31 +71,39 @@ class Converter
     private static function readCuts($cutsFile)
     {
 
-        $fileHandle = fopen($cutsFile, "rb");
         $newFileArray = [];
 
-        if ($fileHandle) {
-            while (!feof($fileHandle)) {
+        if (is_file(realpath($cutsFile))) {
 
-                if (!($where = fread($fileHandle, (64 / 8)))) {
-                    break;
+            $fileHandle = fopen($cutsFile, "rb");
+
+
+            if ($fileHandle) {
+                while (!feof($fileHandle)) {
+
+                    if (!($where = fread($fileHandle, (64 / 8)))) {
+                        break;
+                    }
+                    if (!($what = fread($fileHandle, (32 / 8)))) {
+                        break;
+                    }
+
+                    $where = implode(unpack("J", $where));
+                    $what = implode(unpack("N", $what));
+
+                    if ($what < 4) {
+
+                        $newFileArray[intval($where)] = [intval($where), intval($what)];
+                    }
                 }
-                if (!($what = fread($fileHandle, (32 / 8)))) {
-                    break;
-                }
 
-                $where = implode(unpack("J", $where));
-                $what = implode(unpack("N", $what));
+                fclose($fileHandle);
 
-                if ($what < 4) {
+                echo "CUTs file successfully read.\n\n";
+            } else {
 
-                    $newFileArray[intval($where)] = [intval($where), intval($what)];
-                }
+                echo "CUTs file not found!\n\n";
             }
-
-            fclose($fileHandle);
-
-            echo "CUTs file successfully read.\n\n";
         } else {
 
             echo "CUTs file not found!\n\n";
@@ -124,18 +151,25 @@ class Converter
     private static function readComskipPlist($plistFile)
     {
 
-        $xmlNodes = simplexml_load_file($plistFile);
         $newCutsArray = [];
 
-        if ($xmlNodes) {
+        if (is_file(realpath($plistFile))) {
+            $xmlNodes = simplexml_load_file($plistFile);
 
-            foreach ($xmlNodes->integer as $integerNode) {
 
-                $newCutsArray[(int)$integerNode] = [(int)$integerNode, 2];
+            if ($xmlNodes) {
+
+                foreach ($xmlNodes->integer as $integerNode) {
+
+                    $newCutsArray[(int)$integerNode] = [(int)$integerNode, 2];
+                }
+
+                echo "Comskip PLIST has been succesfully read.\n\n";
+
+            } else {
+
+                echo "Comskip PLIST file not found!\n\n";
             }
-
-            echo "Comskip PLIST has been succesfully read.\n\n";
-
         } else {
 
             echo "Comskip PLIST file not found!\n\n";
