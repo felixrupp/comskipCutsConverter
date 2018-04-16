@@ -26,7 +26,7 @@ class Converter
 
         $fileName = $comskipFolder;
 
-        $cutsDataOld = self::readCuts($comskipBasePath . "/" . $fileName . ".ts.cuts");
+        $cutsDataOld = self::readCuts($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".ts.cuts");
 
         $plistData = self::readComskipPlist($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".plist");
 
