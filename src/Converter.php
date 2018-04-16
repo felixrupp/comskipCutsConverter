@@ -27,13 +27,27 @@ class Converter
 
         $fileName = $comskipFolder;
 
-        if (is_file(realpath($comskipBasePath . "/" . $comskipFolder . ".ts.cuts")) && !is_file(realpath($comskipBasePath . "/" . $comskipFolder . ".ts.old.cuts"))) {
+        $cutsDataOld = [];
+        if (is_file(realpath($comskipBasePath . "/" . $comskipFolder . ".ts.old.cuts"))) {
 
-            echo "Rename old Enigma2 cuts-file …\n\n";
-            rename($comskipBasePath . "/" . $comskipFolder . ".ts.cuts", $comskipBasePath . "/" . $comskipFolder . ".ts.old.cuts");
+            echo "Old Enigma2 cuts-file already found for merge …\n\n";
+            $cutsDataOld = self::readCuts($comskipBasePath . "/" . $fileName . ".ts.old.cuts");
+
         }
+        else {
 
-        $cutsDataOld = self::readCuts($comskipBasePath . "/" . $fileName . ".ts.old.cuts");
+            if(is_file(realpath($comskipBasePath . "/" . $comskipFolder . ".ts.cuts"))) {
+
+                echo "Rename old Enigma2 cuts-file for merge …\n\n";
+                rename($comskipBasePath . "/" . $comskipFolder . ".ts.cuts", $comskipBasePath . "/" . $comskipFolder . ".ts.old.cuts");
+
+                $cutsDataOld = self::readCuts($comskipBasePath . "/" . $fileName . ".ts.old.cuts");
+            }
+            else {
+
+                echo "No old Enigma2 cuts-file found, only generating a new one …\n\n";
+            }
+        }
 
         $plistData = self::readComskipPlist($comskipBasePath . "/" . $comskipFolder . "/" . $fileName . ".plist");
 
