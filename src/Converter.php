@@ -47,7 +47,7 @@ class Converter
 
     /**
      * @param string $cutsFile
-     * @return array|bool
+     * @return array
      */
     private static function readCuts($cutsFile)
     {
@@ -77,12 +77,12 @@ class Converter
             fclose($fileHandle);
 
             echo "CUTs file successfully read.\n\n";
-            return $newFileArray;
         } else {
 
             echo "CUTs file not found!\n\n";
-            return FALSE;
         }
+
+        return $newFileArray;
     }
 
     /**
@@ -119,16 +119,15 @@ class Converter
 
     /**
      * @param string $plistFile
-     * @return array|bool
+     * @return array
      */
     private static function readComskipPlist($plistFile)
     {
 
         $xmlNodes = simplexml_load_file($plistFile);
+        $newCutsArray = [];
 
         if ($xmlNodes) {
-
-            $newCutsArray = [];
 
             foreach ($xmlNodes->integer as $integerNode) {
 
@@ -136,12 +135,13 @@ class Converter
             }
 
             echo "Comskip PLIST has been succesfully read.\n\n";
-            return $newCutsArray;
+
         } else {
 
             echo "Comskip PLIST file not found!\n\n";
-            return FALSE;
         }
+
+        return $newCutsArray;
     }
 }
 

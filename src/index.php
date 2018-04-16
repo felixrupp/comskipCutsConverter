@@ -42,10 +42,9 @@ Access this help with --help, -help, -h oder -?
 
         $comskipFolderAbsolute = substr($comskipFolder, 0, strrpos($comskipFolder, ".ts"));
 
-        $comskipFolder = substr($comskipFolderAbsolute, strrpos($comskipFolderAbsolute, "/"), strlen($comskipFolderAbsolute));
+        $comskipFolder = ltrim(substr($comskipFolderAbsolute, strrpos($comskipFolderAbsolute, "/"), strlen($comskipFolderAbsolute)), '/');
 
-        $comskipBasePath = dirname($comskipFolderAbsolute);
-
+        $comskipBasePath = rtrim(dirname($comskipFolderAbsolute), '/');
     } else {
 
         die(1);
