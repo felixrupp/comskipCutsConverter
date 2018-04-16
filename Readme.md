@@ -23,7 +23,7 @@ This tool needs, as the name implies, a version of [comskip](https://github.com/
 - [git clone this repository](https://github.com/felixrupp/comskipCutsConverter.git): `git clone --recursive https://github.com/felixrupp/comskipCutsConverter.git`
 - Change into the comskipCutsConverter directory: `cd comskipCutsConverter`
 - Change into the vendor/erikkaashoek/Comskip subdirectory: `cd vendor/erikkaashoek/Comskip`
-- Install comskip as stated in the comskip [https://github.com/erikkaashoek/Comskip](installation manual)
+- Install comskip as stated in the comskip [installation manual](https://github.com/erikkaashoek/Comskip)
 
 ### Build the PHAR archive
 
