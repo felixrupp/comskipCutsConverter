@@ -37,7 +37,7 @@ class Comskip
         }
 
         #$shellCommand = escapeshellcmd(escapeshellarg(dirname(__FILE__)) . "/../vendor/erikkaashoek/Comskip/comskip --ini=" . escapeshellarg(dirname(__FILE__) . "/" . self::INI_FILE) . " --hwassist --plist " . escapeshellarg($comskipBasePath . "/" . $comskipFolder) . ".ts --output=" . escapeshellarg($comskipBasePath . "/" . $comskipFolder));
-        $shellCommand = dirname(\Phar::running(false)) . "/comskip --ini=" . escapeshellarg(dirname(\Phar::running(false)) . "/" . self::INI_FILE) . " --hwassist --plist " . escapeshellarg($comskipBasePath . "/" . $comskipFolder . ".ts") . ' --output=' . escapeshellarg($comskipBasePath . "/" . $comskipFolder);
+        $shellCommand = escapeshellarg(dirname(\Phar::running(false))) . "/comskip --ini=" . escapeshellarg(dirname(\Phar::running(false)) . "/" . self::INI_FILE) . " --hwassist --plist " . escapeshellarg($comskipBasePath . "/" . $comskipFolder . ".ts") . ' --output=' . escapeshellarg($comskipBasePath . "/" . $comskipFolder);
 
         return system($shellCommand);
     }
